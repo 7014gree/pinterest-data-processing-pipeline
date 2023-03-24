@@ -7,8 +7,9 @@ test1_consumer = KafkaConsumer(
     auto_offset_reset="earliest"
 )
 
-test1_consumer.subscribe(topics=["Test_topic1"])
+test1_consumer.subscribe(topics=["PinterestData"])
 
+print("test") 
 try:
     for message in test1_consumer:
         print(message.value)

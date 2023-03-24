@@ -1,19 +1,39 @@
 from kafka import KafkaProducer
 from json import dumps
+from fastapi import FastAPI
+from pydantic import BaseModel
+import uvicorn
+
+app = FastAPI()
 
 
 
-test1_producer = KafkaProducer(
+class Data(BaseModel):
+    category: str
+    index: int
+    unique_id: str
+    title: str
+    description: str
+    follower_count: str
+    tag_list: str
+    is_image_or_video: str
+    image_src: str
+    downloaded: int
+    save_location: str
+
+pinterest_data_producer = KafkaProducer(
     bootstrap_servers="localhost:9092",
-    client_id="test1_producer",
+    client_id="pinterest_data_producer",
     value_serializer=lambda inputmessage: dumps(inputmessage).encode("ascii"),
 )
 
-topic_name = "Test_topic1"
+@app.post("/pin/")
+def get_db_row(item: Data):
+    data = dict(item)
+    pinterest_data_producer.send(topic="PinterestData", value=data)
+    print(data)
+    return item
 
-while True:
-    input_key = input("Enter key name: ")
-    input_value = input("Enter value name: ")
-    msg = {input_key: input_value}
-    test1_producer.send(topic=topic_name, value=msg)
 
+if __name__ == '__main__':
+    uvicorn.run("kafka_producer:app", host="localhost", port=8000)

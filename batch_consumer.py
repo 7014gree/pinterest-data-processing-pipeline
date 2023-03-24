@@ -5,16 +5,18 @@ import boto3
 s3_client = boto3.client('s3')
 
 
-test1_consumer = KafkaConsumer(
+pinterest_data_consumer = KafkaConsumer(
     bootstrap_servers="localhost:9092",
     value_deserializer=lambda message: loads(message),
-    auto_offset_reset="earliest"
+    #auto_offset_reset="earliest"
 )
 
-test1_consumer.subscribe(topics=["Test_topic1"])
+pinterest_data_consumer.subscribe(topics=["test"])
 
 try:
-    for message in test1_consumer:
+    print("test1")
+    for message in pinterest_data_consumer:
+        print("test2")
         file_name = f"msg3{message.timestamp}.json"
 
         # old: writes json to folder then reads and uploads
