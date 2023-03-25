@@ -122,7 +122,7 @@ def write_to_postgres(df, id):
 
 # For use with find_max_str_length
 # Change .foreachBatch() to .foreachBatch(lambda df, id: find_max_str_length(df, id, columns_to_summarise)) \
-# From initial data loaded: description = 179, category = 14, title = 151, tag_list = 234, image_src= 81, poster_name = null, save_location = 20
+# From initial data loaded: description = 179, category = 14, title = 151, tag_list = 234, image_src= 81, poster_name = ?, save_location = 20
 columns_to_summarise = ['description', 'category', 'title', 'tag_list', 'image_src', 'poster_name', 'save_location']
 
 cleaned_df \

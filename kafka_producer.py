@@ -14,6 +14,7 @@ class Data(BaseModel):
     unique_id: str
     title: str
     description: str
+    poster_name: str
     follower_count: str
     tag_list: str
     is_image_or_video: str
